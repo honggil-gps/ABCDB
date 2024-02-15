@@ -1,3 +1,4 @@
+const Input = require('./enroll/enrol.js')
 let mysql = require('mysql2');
 
 let connection = mysql.createConnection({
