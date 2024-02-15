@@ -32,7 +32,7 @@ async function main(){
             if(select === `1`){
                 let nike = 100;
                 console.log(`${nike}xx${size}`)
-                let sql= 
+                // let sql= 
             }
         }
       }
