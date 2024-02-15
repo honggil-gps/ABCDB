@@ -13,9 +13,9 @@ connection.connect((err)=> {
 
 
 //삽입 부분
-
+function insert(){
   let sql = `INSERT INTO Product(product_num,product_name,unit,size,price) 
-            VALUES(12414,'NIKE',100,265,9000)`;
+            VALUES(?,'?',?,?,?)`;
 
   let pro_value=[12414,'NIKE',100,265,9000];
   connection.query(sql, pro_value, (err, result, fields)=>{
@@ -23,11 +23,7 @@ connection.connect((err)=> {
 
     console.log('삽입되었습니다');
   });
-  // connection.query(sql);
 
   connection.end();
-});
-
-let sql = `INSERT INTO Product(product_num,product_name,unit,size,price) 
-      VALUES(?,?,?,?,?)`;
-      connection.query(sql,[2,'NIKE',100,265,9000]);
+  });
+};
