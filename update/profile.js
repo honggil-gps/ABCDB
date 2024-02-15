@@ -1,5 +1,6 @@
 const Input = require('./userInput');
 let mysql = require('mysql');
+const Info = require('../information/info');
 
 let connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -17,7 +18,7 @@ async function main(){
     let menu = await Input.getUserInput();
     if(menu==='1') {
       console.log('내정보')
-      console.log();
+      Info.infor('user');
       let title = await Input.getUserInput();
       console.log('');
       let sql = `INSERT INTO todos(title,completed) VALUES(?,false)`;
@@ -68,6 +69,7 @@ async function main(){
       
     }else if(menu==='3'){    
       console.log('상품보기');
+      Info.infor('product');
     }else if(menu==='4'){ 
       console.log('종료되었습니다~');
       connection.end();
