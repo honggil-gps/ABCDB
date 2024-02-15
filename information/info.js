@@ -19,5 +19,18 @@ connection.connect((err)=> {
     connection.end();
   });
 }
+function select_infor(a,b){
+  connection.connect((err)=>{
+    if(err) return console.err(err.message);
 
+    let sql = `SELECT * FROM ${a} WHERE userid == ${b}`;
+    connection.query(sql, [true], (error, results, fields) => {
+      if (error) return console.error(error.message);
+        console.table(results);
+    });
+    connection.end();
+  });
+}
+
+module.exports = {select_infor};
 module.exports = {infor};

@@ -72,6 +72,7 @@ async function main(){
                   console.log(`기존 내용은 다음과 같습니다.`)                 //기존내용 ,다음에 할 작업을 고르세요
                   Info.infor(`${table}`);
                   console.log(`어떤 줄을 수정하시겠습니까?`)                  //어떤 줄 수정?
+                  // PK 값 입력을 통해서 원하는 row 수정
                 }else if(select ==='3'){                              //3번이 입력되면
                   console.log(`${manager}번 (데이터 삭제) 선택하셨습니다.`)    //3번 데이터 삭제를 선택하셨습니다.
                   console.log(`기존 내용은 다음과 같습니다.`)               //기존내용 ,다음에 할 작업을 고르세요
@@ -88,9 +89,10 @@ async function main(){
                   console.log('잘못된 입력입니다.');
                 };
             }
-    }else if(menu==='2'){
+    }else if(menu==='2'){                                           //2번 선택 (고객용)
+      let table = 'user';
       console.log('1. 회원가입 2. 로그인');
-      Info.infor('payment');
+      //Info.infor('payment');
       let customer = await Input.getUserInput();
       if(customer === '1'){
         console.log(`${customer}번 메뉴 (회원가입) 선택하셨습니다.`)
@@ -109,7 +111,15 @@ async function main(){
         let user_card = await Input.getUserInput();
       }
       else if(customer === '2'){
-        
+        console.log('아이디를 입력해주세요');
+        let id = await Input.getUserInput();
+        console.log(`입력하신 ID는 ${id}입니다.`);
+        console.log(`다음에 할 작업을 고르세요`)                          //다음에 할 작업을 고르세요
+        console.log(`1.내 정보 2.정보수정 3.상품보기 4. 종료`)       // 5개의 메뉴 보여줌
+        let select = await Input.getUserInput();                   //select에 입력된 값 저장
+        if(select === '1'){
+          Info.infor(`${table}`);
+        }
       }
       else{
         console.log(`올바른 번호를 입력해주세요`)
