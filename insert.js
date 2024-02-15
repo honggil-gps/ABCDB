@@ -7,7 +7,7 @@ let connection = mysql.createConnection({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
 });
-function insert(table_name ,id, pwd, email, phone, address, name){
+function insert(id, pwd, email, phone, address, name){
 connection.connect((err)=> {
   if (err) return console.err(err.message);
 //삽입 부분
