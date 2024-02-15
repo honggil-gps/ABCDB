@@ -1,6 +1,7 @@
 const Input = require('./enroll/enrol.js');
 let mysql = require('mysql2');
 const Info = require('./information/info.js');
+const Insert=require('./insert.js');
 
 let connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -89,27 +90,30 @@ async function main(){
                   console.log('잘못된 입력입니다.');
                 };
             }
-    }else if(menu==='2'){                                           //2번 선택 (고객용)
+    }else if(menu==='2'){                                //2번 선택 (고객용)
       let table = 'user';
       console.log('1. 회원가입 2. 로그인');
-      //Info.infor('payment');
       let customer = await Input.getUserInput();
       if(customer === '1'){
         console.log(`${customer}번 메뉴 (회원가입) 선택하셨습니다.`)
         console.log(`회원가입 >`);
-        console.log('이름을 입력해주세요')
-        let user_name = await Input.getUserInput();
-        console.log('사용하실 아이디를 입력해주세요');
-        let user_id = await Input.getUserInput();
-        console.log('사용하실 비밀번호를 입력해주세요');
-        let user_pwd = await Input.getUserInput();
-        console.log('비밀번호 확인');
-        let user_repwd = await Input.getUserInput();
-        console.log('이메일을 입력해주세요');
-        let user_email = await Input.getUserInput();
-        console.log('카드번호를 입력해주세요');
-        let user_card = await Input.getUserInput();
-      }
+          console.log('이름을 입력해주세요')                           //이름 받는 구간
+          let user_name = await Input.getUserInput();                  
+          console.log('사용하실 아이디를 입력해주세요');               //아이디 받는 구간
+          let user_id = await Input.getUserInput();                   
+          console.log('사용하실 비밀번호를 입력해주세요');             //비밀번호 받는구간
+          let user_pwd = await Input.getUserInput();                  
+          console.log('비밀번호 확인');                                //비밀번호 확인 받는구간
+          let user_repwd = await Input.getUserInput();                
+          console.log('휴대폰 번호를 입력해주세요');                   //휴대폰 번호 받는구간 
+          let user_phone = await Input.getUserInput();                
+          console.log('이메일을 입력해주세요');                        //이메일 받는 구간
+          let user_email = await Input.getUserInput();                 
+          console.log('주소를 입력해주세요');                          //주소 받는 구간   
+          let user_address = await Input.getUserInput();
+
+          Insert.insert(user_id, user_pwd, user_email, user_phone, user_address, user_name)
+          }
       else if(customer === '2'){
         console.log('아이디를 입력해주세요');
         let id = await Input.getUserInput();
@@ -124,6 +128,11 @@ async function main(){
       else{
         console.log(`올바른 번호를 입력해주세요`)
       }
+        }
+          // else{
+          //   console.log('비밀번호가 틀립니다. 다시 입력해주세요')
+          //   user_repwd = await Input.getUserInput();
+      
     }else if(menu==='3'){ 
       console.log('프로그램 종료');
       connection.end();
@@ -132,9 +141,8 @@ async function main(){
       console.log('메뉴를 잘못 선택하셨습니다.');
     };
     await wait(1000);
-    console.clear();
+    // console.clear();
   };
-};
 
 main();
 
