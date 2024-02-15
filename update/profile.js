@@ -24,7 +24,7 @@ async function main(){
       connection.query(sql,[title]);
     }else if(menu==='2'){
       console.log('정보수정');
-      console.log(`1. 아이디 2.이름 3.비밀번호 4.전화번호 5.이메일 6.뒤로가기`);
+      console.log(`1. 아이디 2.이름 3.비밀번호 4.전화번호 5.이메일 6.뒤로가기 7.종료`);
       let changeinfo = await Input.getUserInput();
       if(changeinfo==='1'){  
         console.log('수정할 아이디를 입력해주세요.')  
@@ -54,6 +54,11 @@ async function main(){
         console.log(`${changeuseremail}로 변경 완료되었습니다.`) 
       }else if(changeinfo==='6'){ 
         console.log('뒤로가기~');
+        
+        // connection.end();
+        // process.exit(menu);
+      }else if(changeinfo==='7'){ 
+        console.log('종료되었습니다~');
         connection.end();
         process.exit();
       }else{ 
@@ -61,8 +66,8 @@ async function main(){
       };
     }else if(menu==='3'){    
       console.log('상품보기');
-    }else if(menu==='6'){ 
-      console.log('프로그램 종료~');
+    }else if(menu==='4'){ 
+      console.log('종료되었습니다~');
       connection.end();
       process.exit();
     }else{ 
