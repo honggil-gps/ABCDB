@@ -11,6 +11,7 @@ let connection = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 const EventEmitter = require('events');
+const { resolve } = require('path');
 
 // 이벤트를 처리하는 EventEmitter 객체 생성
 const myEmitter = new EventEmitter();
@@ -80,8 +81,10 @@ async function main(){
                   console.log(`어떤 줄을 수정하시겠습니까?`)                  //어떤 줄 수정?
                   // PK 값 입력을 통해서 원하는 row 수정
                 }else if(select ==='3'){                              //3번이 입력되면
-                  console.log(`${manager}번 (데이터 삭제) 선택하셨습니다.`)    //3번 데이터 삭제를 선택하셨습니다.
-                  console.log(`기존 내용은 다음과 같습니다.`)               //기존내용 ,다음에 할 작업을 고르세요
+                  console.log(`${select}번 (데이터 삭제) 선택하셨습니다.`)    //3번 데이터 삭제를 선택하셨습니다.
+                  console.log(`기존 내용은 다음과 같습니다.`);               //기존내용 ,다음에 할 작업을 고르세요
+                  Info.infor(`${table}`);
+
                   Info.infor(`${table}`);
                   console.log(`어떤 줄을 삭제하시겠습니까?`)                //어떤 줄 삭제?
                 }else if(select ==='4'){                             //4번이 입력되면
