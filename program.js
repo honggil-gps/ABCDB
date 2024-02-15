@@ -1,4 +1,4 @@
-const Input = require('./userInput')
+const Input = require('./enroll/enrol.js')
 let mysql = require('mysql2');
 
 let connection = mysql.createConnection({
@@ -11,26 +11,43 @@ let connection = mysql.createConnection({
 
 
 async function main(){
-  console.clear();
-  connection.connect();
-  while(true){
-    console.log(`1. 데이터입력 2.데이터수정 3.데이터삭제 4.목록  5.종료`);
-    let menu = await Input.getUserInput();
-    if(menu==='1') {
-      console.log('아이템삽입>');
-      let title = await Input.getUserInput();
-      console.log('');
-      let sql = `INSERT INTO Product(product_num,product_name,unit,size,price) 
-      VALUES(?,?,?,?,?)`;
-      connection.query(sql,[2,'NIKE',100,265,9000]);
+  console.clear();                          //콘솔창정리
+  connection.connect();                     //DB에 연결
+  while(true){                              //true 값을 반환하는 동안 프로그램 실행
+    console.log(`1. 관리자용 2. 회원용 3. 종료`);
+    let menu = await Input.getUserInput();   //menu 값에 입력된 값 저장
+    if(menu==='1') {                         //mune 값이 1(관리자용) 이라면
+      console.log('1.물품 2. 회원 3. 주문');     //1. 물품, 2. 회원, 3.주문 메뉴를 보여줌
+      let manager = await Input.getUserInput(); // manager 값에 입력된 값 저장
+      if(manager === '1'){                      // 1. 물품을 고른다면
+        console.log(`${manager}번 메뉴 (회원) 선택하셨습니다.`) //1번 메뉴 선택했습니다.
+        console.log(`다음에 할 작업을 고르세요`)                //다음에 할 작업을 고르세요
+        console.log(`1.입력/추가 2.수정 3.삭제 4.데이터 보기 5.종료`)// 5개의 메뉴 보여줌
+        let select = await Input.getUserInput();             //select에 입력된 값 저장
+        if(select === '1'){                                  //1번이 입력되면
+            console.log(`${manager}번 메뉴 (입력/추가) 선택하셨습니다.`) //1번 메뉴 선택했습니다.
+            console.log(`어떤 브랜드의 제품이신가요?`)                //다음에 할 작업을 고르세요
+            console.log(`1.나이키 2.아디다스 3.반스 4.퓨마 5.컨버스`)// 5개의 메뉴 보여줌
+            let select = await Input.getUserInput();             //select에 입력된 값 저장
+            if(select === `1`){
+                let nike = 100;
+                console.log(`${nike}xx${size}`)
+                let sql= 
+            }
+        }
+      }
+      let sql = `INSERT INTO todos(title,completed) VALUES(?,false)`;
+      connection.query(sql,[title]);
     }else if(menu==='2'){
-      console.log('수정');
-    }else if(menu==='3'){    
-      console.log('삭제');
-    }else if(menu==='4'){ 
-      console.log('목록');
-    }else if(menu==='5'){ 
-      console.log('프로그램 종료~');
+      console.log('1. 회원가입 2. 로그인');
+      let customer = await Input.getUserInput();
+      if(customer === '1'){
+        console.log(`회원가입 >`);
+        let 
+      }
+
+    }else if(menu==='3'){ 
+      console.log('프로그램 종료');
       connection.end();
       process.exit();
     }else{ 
