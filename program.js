@@ -10,6 +10,11 @@ let connection = mysql.createConnection({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
 });
+const EventEmitter = require('events');
+
+// 이벤트를 처리하는 EventEmitter 객체 생성
+const myEmitter = new EventEmitter();
+myEmitter.setMaxListeners(20); // 원하는 숫자로 변경
 
 
 async function main(){
@@ -127,10 +132,6 @@ async function main(){
         if(menu==='1') {
           console.log('내정보')
           Info.infor('user');
-          let title = await Input.getUserInput();
-          console.log('');
-          let sql = `INSERT INTO todos(title,completed) VALUES(?,false)`;
-          connection.query(sql,[title]);
         }else if(menu==='2'){
           console.log('정보수정');
           console.log(`1.아이디 2.이름 3.비밀번호 4.전화번호 5.이메일 6.종료`);
