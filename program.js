@@ -119,29 +119,86 @@ async function main(){
         let id = await Input.getUserInput();
         console.log(`입력하신 ID는 ${id}입니다.`);
         console.log(`다음에 할 작업을 고르세요`)                          //다음에 할 작업을 고르세요
-        console.log(`1.내 정보 2.정보수정 3.상품보기 4. 종료`)       // 5개의 메뉴 보여줌
-        let select = await Input.getUserInput();                   //select에 입력된 값 저장
-        if(select === '1'){
-          Info.infor(`${table}`);
-        }
-      }
-      else{
-        console.log(`올바른 번호를 입력해주세요`)
-      }
+        console.log(`1.내정보 2.정보수정 3.상품보기 4. 종료`)       // 5개의 메뉴 보여줌
+        let menu = await Input.getUserInput();                   //select에 입력된 값 저장
+        // if(select === '1'){
+        //   Info.infor(`${table}`);
+        // }
+        if(menu==='1') {
+          console.log('내정보')
+          Info.infor('user');
+          let title = await Input.getUserInput();
+          console.log('');
+          let sql = `INSERT INTO todos(title,completed) VALUES(?,false)`;
+          connection.query(sql,[title]);
+        }else if(menu==='2'){
+          console.log('정보수정');
+          console.log(`1.아이디 2.이름 3.비밀번호 4.전화번호 5.이메일 6.종료`);
+          let changeinfo = await Input.getUserInput();
+          if(changeinfo==='1'){  
+            console.log('수정할 아이디를 입력해주세요.')  
+            console.log('아이디 >');
+            let changeuserid = await Input.getUserInput();
+            console.log(`${changeuserid}로 변경 완료되었습니다.`)
+            console.log('~~~~~~~~~~');
+            console.log('');
+          }else if(changeinfo==='2'){ 
+            console.log('이름 >');
+            let changeusername = await Input.getUserInput();
+            console.log(`${changeusername}로 변경 완료되었습니다.`)
+            console.log('~~~~~~~~~~');
+            console.log('');
+          }else if(changeinfo==='3'){ 
+            console.log('비밀번호 >');  
+            let changeuserpassword = await Input.getUserInput();
+            console.log(`${changeuserpassword}로 변경 완료되었습니다.`)
+            console.log('~~~~~~~~~~');
+            console.log('');
+          }else if(changeinfo==='4'){ 
+            console.log('전화번호 >');
+            let changeuserphone = await Input.getUserInput();
+            console.log(`${changeuserphone}로 변경 완료되었습니다.`)
+            console.log('~~~~~~~~~~');
+            console.log('');
+          }else if(changeinfo==='5'){ 
+            console.log('이메일 >');
+            let changeuseremail = await Input.getUserInput();
+            console.log(`${changeuseremail}로 변경 완료되었습니다.`) 
+            console.log('~~~~~~~~~~');
+            console.log('');
+          }else if(changeinfo==='6'){ 
+            console.log('종료되었습니다~');
+            console.log('~~~~~~~~~~');
+            connection.end();
+            process.exit();
+          }else{ 
+              console.log('메뉴를 잘못 선택하셨습니다.');
+          };
+          
+        }else if(menu==='3'){    
+          console.log('상품보기');
+          Info.infor('product');
+        }else if(menu==='4'){ 
+          console.log('종료되었습니다~');
+          connection.end();
+          process.exit();
+        }else{ 
+            console.log('메뉴를 잘못 선택하셨습니다.');
+        };
+        await wait(1000);
+        // console.clear();
+      };
     
-          // else{
-          //   console.log('비밀번호가 틀립니다. 다시 입력해주세요')
-          //   user_repwd = await Input.getUserInput();
-      
     }else if(menu==='3'){ 
       console.log('프로그램 종료');
       connection.end();
       process.exit();
-    }else{ 
-      console.log('메뉴를 잘못 선택하셨습니다.');
-    };
+    // }else{ 
+    //   console.log('메뉴를 잘못 선택하셨습니다.');
+    // };
     await wait(1000);
     // console.clear();
+    };
   };
 };
 main();
