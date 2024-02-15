@@ -11,7 +11,6 @@ let connection = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
-
 async function main(){
     console.clear();                          //콘솔창정리
     connection.connect();                     //DB에 연결
@@ -35,7 +34,7 @@ async function main(){
               console.log(`1.나이키 2.아디다스 3.반스 4.퓨마 5.컨버스`)// 5개의 메뉴 보여줌
               let select = await Input.getUserInput();             //select에 입력된 값 저장
                 if(select === `1`){
-                  let nike = 100;
+                  //let nike = 100;
                   // console.log(`${nike}xx${size}`)
                   // let sql= 
               }// 추가 or 수정필요 1.
@@ -44,11 +43,26 @@ async function main(){
                 console.log(`기존 내용은 다음과 같습니다.`)                 //기존내용 ,다음에 할 작업을 고르세요
                 Info.infor(`${table}`);
                 console.log(`어떤 줄을 수정하시겠습니까?`)                  //어떤 줄 수정?
-              }else if(select ==='3'){                              //3번이 입력되면
-                console.log(`${manager}번 (데이터 삭제) 선택하셨습니다.`)    //3번 데이터 삭제를 선택하셨습니다.
-                console.log(`기존 내용은 다음과 같습니다.`)               //기존내용 ,다음에 할 작업을 고르세요
-                Info.infor(`${table}`);
-                console.log(`어떤 줄을 삭제하시겠습니까?`)                //어떤 줄 삭제?
+              } else if (select === '3') {
+                console.log(`${manager}번 (데이터 삭제) 선택하셨습니다.`);
+                console.log(`기존 내용은 다음과 같습니다.`);
+                
+                // Info.infor() 함수가 Promise를 반환하도록 수정
+                const infoPromise = new Promise((resolve) => {
+                  Info.infor(`${table}`);
+                  resolve();
+                });
+              
+                // 0.5초 후에 console.log 실행
+                infoPromise.then(() => {
+                  return new Promise((resolve) => {
+                    setTimeout(() => {
+                      console.log(`어떤 줄을 삭제하시겠습니까?`);
+                      resolve();
+                    }, 500);
+                  });
+                });
+              
               }else if(select ==='4'){                             //4번이 입력되면
                 console.log(`${manager}번 (데이터 보기) 선택하셨습니다.`)    //4번 데이터 삭제를 선택하셨습니다.
                 Info.infor(`${table}`);
@@ -74,11 +88,25 @@ async function main(){
                   Info.infor(`${table}`);
                   console.log(`어떤 줄을 수정하시겠습니까?`)                  //어떤 줄 수정?
                   // PK 값 입력을 통해서 원하는 row 수정
-                }else if(select ==='3'){                              //3번이 입력되면
-                  console.log(`${manager}번 (데이터 삭제) 선택하셨습니다.`)    //3번 데이터 삭제를 선택하셨습니다.
-                  console.log(`기존 내용은 다음과 같습니다.`)               //기존내용 ,다음에 할 작업을 고르세요
+                
+              } else if (select === '3') {
+                console.log(`${manager}번 (데이터 삭제) 선택하셨습니다.`);
+                console.log(`기존 내용은 다음과 같습니다.`);
+                // Info.infor() 함수가 Promise를 반환하도록 수정
+                const infoPromise = new Promise((resolve) => {
                   Info.infor(`${table}`);
-                  console.log(`어떤 줄을 삭제하시겠습니까?`)                //어떤 줄 삭제?
+                  resolve();
+                });
+                // 0.5초 후에 console.log 실행
+                infoPromise.then(() => {
+                  return new Promise((resolve) => {
+                    setTimeout(() => {
+                      console.log(`어떤 줄을 삭제하시겠습니까?`);
+                      let id =  Input.getUserInput();
+                      resolve();
+                    }, 500);
+                  });
+                });
                 }else if(select ==='4'){                             //4번이 입력되면
                   console.log(`${manager}번 (데이터 보기) 선택하셨습니다.`)    //4번 데이터 삭제를 선택하셨습니다.
                   Info.infor(`${table}`);
@@ -174,7 +202,6 @@ async function main(){
           }else{ 
               console.log('메뉴를 잘못 선택하셨습니다.');
           };
-          
         }else if(menu==='3'){    
           console.log('상품보기');
           Info.infor('product');
