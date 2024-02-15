@@ -1,3 +1,4 @@
+const Input = require('./userInput')
 let mysql = require('mysql2');
 
 let connection = mysql.createConnection({
@@ -16,11 +17,12 @@ async function main(){
     console.log(`1. 데이터입력 2.데이터수정 3.데이터삭제 4.목록  5.종료`);
     let menu = await Input.getUserInput();
     if(menu==='1') {
-      console.log('제목입력>');
+      console.log('아이템삽입>');
       let title = await Input.getUserInput();
       console.log('');
-      let sql = `INSERT INTO todos(title,completed) VALUES(?,false)`;
-      connection.query(sql,[title]);
+      let sql = `INSERT INTO Product(product_num,product_name,unit,size,price) 
+      VALUES(?,?,?,?,?)`;
+      connection.query(sql,[2,'NIKE',100,265,9000]);
     }else if(menu==='2'){
       console.log('수정');
     }else if(menu==='3'){    
