@@ -7,13 +7,11 @@ let connection = mysql.createConnection({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
 });
-function update(id, change ,table, attr){
+function update(id, change ,table, attr, primaryKey, connection){
 connection.connect((err) => {
-  if (err) return console.error(err.message);
-
   let sql = `UPDATE  ${table}
     SET ${attr} = ?
-    WHERE userid = ?`;
+    WHERE ${primaryKey} = ?`;
 
   let data = [change, id];
 
@@ -21,10 +19,6 @@ connection.connect((err) => {
     if (error) return console.error(error.message);
     console.log('Rows affected:', results.affectedRows);
   });
-
-  // close the database connection
-  connection.end();
-
 });
 }
 module.exports = {update}

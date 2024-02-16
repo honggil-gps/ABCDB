@@ -15,8 +15,6 @@ connection.connect((err)=> {
 
   let table = 'user';
 
-  `${table}id` = userid
-
   let user_value=[id, pwd, email, phone, address, name];
   connection.query(sql, user_value, (err, result, fields)=>{
     console.log('삽입되었습니다');
