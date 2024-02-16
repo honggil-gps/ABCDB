@@ -1,8 +1,9 @@
-const Input = require('./enroll/enrol.js');
+const Input = require('./insert/enrol.js');
 let mysql = require('mysql2');
 const Info = require('./information/info.js');
-const Insert=require('./insert.js');
+const Write =require('./insert/insert.js');
 const Update=require('./update/update.js');
+const Delete = require('./delete/delete.js');
 
 let connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -16,7 +17,7 @@ const { resolve } = require('path');
 
 // 이벤트를 처리하는 EventEmitter 객체 생성
 const myEmitter = new EventEmitter();
-myEmitter.setMaxListeners(20); // 원하는 숫자로 변경
+myEmitter.setMaxListeners(100); // 원하는 숫자로 변경
 
 async function main(){
     console.clear();                          //콘솔창정리
@@ -50,26 +51,15 @@ async function main(){
                 console.log(`기존 내용은 다음과 같습니다.`)                 //기존내용 ,다음에 할 작업을 고르세요
                 Info.infor(`${table}`);
                 console.log(`어떤 줄을 수정하시겠습니까?`)                  //어떤 줄 수정?
-              } else if (select === '3') {
-                console.log(`${manager}번 (데이터 삭제) 선택하셨습니다.`);
-                console.log(`기존 내용은 다음과 같습니다.`);
-                
-                // Info.infor() 함수가 Promise를 반환하도록 수정
-                const infoPromise = new Promise((resolve) => {
-                  Info.infor(`${table}`);
-                  resolve();
-                });
-              
-                // 0.5초 후에 console.log 실행
-                infoPromise.then(() => {
-                  return new Promise((resolve) => {
-                    setTimeout(() => {
-                      console.log(`어떤 줄을 삭제하시겠습니까?`);
-                      resolve();
-                    }, 500);
-                  });
-                });
-              
+              }else if(select ==='3'){                              //3번이 입력되면
+                console.log(`${manager}번 (데이터 삭제) 선택하셨습니다.`)    //3번 데이터 삭제를 선택하셨습니다.
+                console.log(`기존 내용은 다음과 같습니다.`)               //기존내용 ,다음에 할 작업을 고르세요
+                Info.infor(`${table}`);
+                console.log(`어떤 줄을 삭제하시겠습니까?`)                //어떤 줄 삭제?
+                let value = await Input.getUserInput();
+                Delete.delete_infor(`${table}`,`${value}`);
+                console.log(`해당 정보가 삭제되었습니다.`)               //기존내용 ,다음에 할 작업을 고르세요
+                Info.infor(`${table}`);
               }else if(select ==='4'){                             //4번이 입력되면
                 console.log(`${manager}번 (데이터 보기) 선택하셨습니다.`)    //4번 데이터 삭제를 선택하셨습니다.
                 Info.infor(`${table}`);
@@ -105,34 +95,25 @@ async function main(){
                   console.log('주소를 입력해주세요');                          //주소 받는 구간   
                   let user_address = await Input.getUserInput();
         
-                  Insert.insert(user_id, user_pwd, user_email, user_phone, user_address, user_name)
+                  Write.write(user_id, user_pwd, user_email, user_phone, user_address, user_name, connection)
                   }
                 else if(select ==='2'){                                //2번이 입력되면
                   console.log(`${select}}번 (데이터 수정) 선택하셨습니다.`)   //2번 메뉴 선택했습니다.
                   console.log(`기존 내용은 다음과 같습니다.`)                 //기존내용 ,다음에 할 작업을 고르세요
                   Info.infor(`${table}`);
                   // PK 값 입력을 통해서 원하는 row 수정
-                }else if(select ==='3') {
-                console.log(`${manager}번 (데이터 삭제) 선택하셨습니다.`);
-                console.log(`기존 내용은 다음과 같습니다.`);
-                // Info.infor() 함수가 Promise를 반환하도록 수정
-                const infoPromise = new Promise((resolve) => {
-                  Info.infor(`${table}`);
-                  resolve();
-                });
-                // 0.5초 후에 console.log 실행
-                infoPromise.then(() => {
-                  return new Promise((resolve) => {
-                    setTimeout(() => {
-                      console.log(`어떤 줄을 삭제하시겠습니까?`);
-                      let id =  Input.getUserInput();
-                      resolve();
-                    });
-                  });
-                });
+                }else if(select ==='3'){                              //3번이 입력되면
+                  console.log(`${manager}번 (데이터 삭제) 선택하셨습니다.`)    //3번 데이터 삭제를 선택하셨습니다.
+                  console.log(`기존 내용은 다음과 같습니다.`)               //기존내용 ,다음에 할 작업을 고르세요
+                  await Info.infor(`${table}`,connection);
+                  console.log(`어떤 줄을 삭제하시겠습니까?`)
+                  let value = await Input.getUserInput();
+                  Delete.delete_infor(`${table}`,`${value}`,connection);
+                  console.log(`해당 정보가 삭제되었습니다.`)               //기존내용 ,다음에 할 작업을 고르세요
+                  //await Info.infor(`${table}`,connection);               //어떤 줄 삭제?
                 }else if(select ==='4'){                             //4번이 입력되면
                   console.log(`${manager}번 (데이터 보기) 선택하셨습니다.`)    //4번 데이터 삭제를 선택하셨습니다.
-                  Info.infor(`${table}`);
+                  await Info.infor(`${table}`,connection);
                 }else if(select ==='5'){                              //5번이 입력되면
                   console.log('프로그램 종료');
                   connection.end();
@@ -164,7 +145,7 @@ async function main(){
               console.log('주소를 입력해주세요');                          //주소 받는 구간   
               let user_address = await Input.getUserInput();
     
-              Insert.insert(user_id, user_pwd, user_email, user_phone, user_address, user_name)
+              Write.write(user_id, user_pwd, user_email, user_phone, user_address, user_name, connection)
               }
             else if(select ==='2'){                                //2번이 입력되면
               console.log(`${select}}번 (데이터 수정) 선택하셨습니다.`)   //2번 메뉴 선택했습니다.
@@ -222,8 +203,8 @@ async function main(){
           console.log('주소를 입력해주세요');                          //주소 받는 구간   
           let user_address = await Input.getUserInput();
 
-          Insert.insert(user_id, user_pwd, user_email, user_phone, user_address, user_name)
-      }
+          Write.write(user_id, user_pwd, user_email, user_phone, user_address, user_name, connection);
+          }
       else if(customer === '2'){
         console.log('아이디를 입력해주세요');
         let id = await Input.getUserInput();
