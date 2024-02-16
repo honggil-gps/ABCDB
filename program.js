@@ -195,7 +195,7 @@ async function main(){
           console.log('사용하실 비밀번호를 입력해주세요');             //비밀번호 받는구간
           let user_pwd = await Input.getUserInput();                  
           console.log('비밀번호 확인');                                //비밀번호 확인 받는구간
-          let user_repwd = await Input.getUserInput();                
+          let user_repwd = await Input.getUserInput();              
           console.log('휴대폰 번호를 입력해주세요');                   //휴대폰 번호 받는구간 
           let user_phone = await Input.getUserInput();                
           console.log('이메일을 입력해주세요');                        //이메일 받는 구간
