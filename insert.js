@@ -39,5 +39,8 @@ connection.connect((err)=> {
   connection.end();
   });
 };
+
+
+
 module.exports = {insert};
 module.exports = {pro_insert};

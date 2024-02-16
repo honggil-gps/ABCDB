@@ -8,18 +8,18 @@ let connection = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 function insert(id, pwd, email, phone, address, name){
-connection.connect((err)=> {
-  if (err) return console.err(err.message);
-//삽입 부분
-  let sql = `INSERT INTO user(userid, user_pwd , user_email, user_phone, user_address, user_name) VALUES(?,?,?,?,?,?)`;
-
-  let pro_value=[id, pwd, email, phone, address, name];
-  connection.query(sql, pro_value, (err, result, fields)=>{
+  connection.connect((err)=> {
+    if (err) return console.err(err.message);
+  //삽입 부분
+    let sql = `INSERT INTO user(userid, user_pwd , user_email, user_phone, user_address, user_name) VALUES(?,?,?,?,?,?)`;
+    
+    let user_value=[id, pwd, email, phone, address, name];
+    connection.query(sql, user_value, (err, result, fields)=>{
     if (err) return console.error(err.message);
-
-    console.log('삽입되었습니다');
-  });
-
-  connection.end();
-  });
-};
+    
+      console.log('삽입되었습니다');
+    });
+    
+    connection.end();
+    });
+    };
