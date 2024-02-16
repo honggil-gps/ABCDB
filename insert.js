@@ -7,11 +7,16 @@ let connection = mysql.createConnection({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
 });
+
 function insert(id, pwd, email, phone, address, name){
 connection.connect((err)=> {
   if (err) return console.err(err.message);
 //삽입 부분
-  let sql = `INSERT INTO user(userid, user_pwd , user_email, user_phone, user_address, user_name) VALUES(?,?,?,?,?,?)`;
+  let sql = `INSERT INTO user(${table}id, user_pwd , user_email, user_phone, user_address, user_name) VALUES(?,?,?,?,?,?)`;
+
+  let table = 'user';
+
+  `${table}id` = userid
 
   let pro_value=[id, pwd, email, phone, address, name];
   connection.query(sql, pro_value, (err, result, fields)=>{
