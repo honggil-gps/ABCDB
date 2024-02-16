@@ -1,5 +1,6 @@
 let mysql =require('mysql');
 
+//이 파일 실행시 dummy data를 DB에 추가한다.
 let connection = mysql.createConnection({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
