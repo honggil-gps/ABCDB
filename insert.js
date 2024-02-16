@@ -7,9 +7,8 @@ let connection = mysql.createConnection({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
 });
-function insert(id, pwd, email, phone, address, name){
+function insert(id, pwd, email, phone, address, name, connection){
 connection.connect((err)=> {
-  if (err) return console.err(err.message);
 //삽입 부분
   let sql = `INSERT INTO user(userid, user_pwd , user_email, user_phone, user_address, user_name) VALUES(?,?,?,?,?,?)`;
 
@@ -19,8 +18,6 @@ connection.connect((err)=> {
 
     console.log('삽입되었습니다');
   });
-
-  connection.end();
   });
 };
 
