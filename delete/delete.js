@@ -1,4 +1,4 @@
-let mysql = require('mysql2');
+let mysql = require('mysql');
 
 let connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -8,10 +8,9 @@ let connection = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
-function delete_infor(table, value) {
+function delete_infor(table, value,connection) {
   // 데이터베이스에 연결
   connection.connect((err) => {
-    if (err) return console.error(err.message);
 
     // 주어진 테이블의 기본 키(primary key) 열 이름을 가져오는 쿼리
     let nameQuery = `SELECT COLUMN_NAME 
@@ -19,7 +18,6 @@ function delete_infor(table, value) {
                       WHERE TABLE_SCHEMA = '${connection.config.database}' 
                       AND TABLE_NAME = '${table}' 
                       AND COLUMN_KEY = 'PRI';`;
-
     // 쿼리 실행
     connection.query(nameQuery, (error, results, fields) => {
       if (error) return console.error(error.message);
@@ -34,20 +32,15 @@ function delete_infor(table, value) {
         // 삭제 쿼리 실행
         connection.query(deleteQuery, [value], (deleteError, deleteResults) => {
           if (deleteError) return console.error(deleteError.message);
-
-          // 연결 종료
-          connection.end();
         });
       } else {
-        // 테이블에서 기본 키를 찾을 수 없는 경우
+        // 테이블에서 기본 키를 찾을 수 없는 경우 
         console.log(`No primary key found in the table ${table}.`);
 
-        // 연결 종료
-        connection.end();
       }
     });
   });
 }
 
 
-delete_infor('user', 456);
+module.exports = {delete_infor};
