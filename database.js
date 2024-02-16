@@ -86,7 +86,7 @@ connection.connect((err)=> {
     console.log(`Inserted Rows: ${result.affectedRows}`);
 
   });
-  orders 삽입
+  //orders 삽입
   let sql_orders = `INSERT INTO orders(Order_num,userid,product_num,count,price) VALUES ?`;
 
   let orders_table=[
