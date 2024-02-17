@@ -83,12 +83,13 @@ async function main(){
                   console.log(`회원추가 >`);
                   console.log('이름을 입력해주세요')                           //이름 받는 구간
                   let user_name = await Input.getUserInput();                  
-                  console.log('사용하실 아이디를 입력해주세요');               //아이디 받는 구간
+                  console.log('사용하실 아이디를 입력해주세요');//아이디 받는 구간
+                  let attr='userid';              
                   let user_id = await Input.getUserInput();
-                  let exam_id=await Examine.userid_exam(user_id,connection );
+                  let exam_id=await Examine.userid_exam(`${table}`,`${attr}`,user_id,connection );
                     while(exam_id === 1 ){
                     user_id = await Input.getUserInput();
-                    exam_id=await Examine.userid_exam(user_id,connection );
+                    exam_id=await Examine.userid_exam(`${table}`,`${attr}`,user_id,connection);
                     }
                   console.log('사용하실 비밀번호를 입력해주세요');             //비밀번호 받는구간
                   let user_pwd = await Input.getUserInput();                  
@@ -201,12 +202,13 @@ async function main(){
           console.log('이름을 입력해주세요')                           //이름 받는 구간
           let user_name = await Input.getUserInput();                  
           console.log('사용하실 아이디를 입력해주세요');               //아이디 받는 구간
+          let attr='userid';              
           let user_id = await Input.getUserInput();
-          let exam=await Examine.userid_exam(user_id,connection );
-            while(exam === 1 ){
-              user_id = await Input.getUserInput();
-              exam=await Examine.userid_exam(user_id,connection );
-            }       
+          let exam_id=await Examine.userid_exam(`${table}`,`${attr}`,user_id,connection );
+          while(exam_id === 1 ){
+            user_id = await Input.getUserInput();
+            exam_id=await Examine.userid_exam(`${table}`,`${attr}`,user_id,connection);
+          }
           console.log('사용하실 비밀번호를 입력해주세요');             //비밀번호 받는구간
           let user_pwd = await Input.getUserInput();                  
           console.log('비밀번호 확인');                                //비밀번호 확인 받는구간
