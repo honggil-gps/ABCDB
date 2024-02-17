@@ -11,7 +11,7 @@ let connection = mysql.createConnection({
 function write (id, pwd, email, phone, address, name, connection){
 connection.connect((err)=> {
 //삽입 부분
-  let sql = `INSERT INTO user(${table}id, user_pwd , user_email, user_phone, user_address, user_name) VALUES(?,?,?,?,?,?)`;
+  let sql = `INSERT INTO user(userid, user_pwd , user_email, user_phone, user_address, user_name) VALUES(?,?,?,?,?,?)`;
 
   let table = 'user';
 
@@ -25,7 +25,7 @@ connection.connect((err)=> {
 function pro_write(num, name, unit, size, price, connection){
 connection.connect((err)=> {
 //삽입 부분
-  let sql = `INSERT INTO product(product_num, product_name , unit, size, prize) VALUES(?,?,?,?,?)`;
+  let sql = `INSERT INTO product(product_num, product_name , unit, size, prize) VALUES(?,?,?,?,?)c`;
 
   let pro_value=[num,name,unit,size,price];
   connection.query(sql, pro_value, (err, rsult, fields)=>{
