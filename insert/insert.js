@@ -65,4 +65,51 @@ function ord_write(Order_num, userid, product_num, count, price, connection){
         });
         });
       };
-module.exports = {write, pro_write, ord_write,cart_write,pay_write};
+
+function pro_write(size, brand, num, name, unit, price, connection) {
+  let make_product_num = (size * 100000) + (brand * 10000) + num*1;
+  console.log(`${make_product_num}`);
+  connection.connect((err) => {
+    let check =0;
+    let columnQuery = `SELECT product_num FROM product`;
+    connection.query(columnQuery, (error, results, fields) => {
+      if (results.length > 0) {
+        for (let i = 0; i < results.length; i++) {
+          if (results[i].product_num == make_product_num) {
+            console.log('사용 불가능한 번호입니다.');
+            num=0;
+            check =1;
+          }
+        }
+      }
+      if(check==1){
+        while(1){
+          num = num+1;
+          let check2 =0;
+          make_product_num = (size * 100000) + (brand * 10000) + num*1;
+          for (let i = 0; i < results.length; i++) {
+            if (results[i].product_num == make_product_num) {
+              check2 =1;
+            }
+          }
+          if (check2==0){
+            break;
+          }
+        }
+      }
+      let sql = `INSERT INTO product(product_num, product_name, unit, size, price) VALUES(?,?,?,?,?)`;
+      let pro_value = [make_product_num, name, unit, size, price];
+      connection.query(sql, pro_value, (err, result, fields) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log(`${make_product_num}가 삽입되었습니다`);
+      }); 
+    });
+  });
+};
+
+
+
+module.exports = {pro_write, ord_write,cart_write,pay_write};
