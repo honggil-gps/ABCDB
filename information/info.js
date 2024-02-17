@@ -24,5 +24,4 @@ async function select_infor(a,b,connection){
     });
 }
 
-module.exports = {select_infor};
-module.exports = {infor};
+module.exports = {select_infor,infor};
