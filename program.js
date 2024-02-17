@@ -304,7 +304,7 @@ async function main(){
     };
   };
 };
-// module.exports = {ex_valueout};
+
 main();
 
 const wait = (timeToDelay) => new Promise((resolve) => setTimeout(resolve, timeToDelay));
