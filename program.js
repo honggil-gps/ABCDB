@@ -84,11 +84,20 @@ async function main(){
                   console.log('이름을 입력해주세요')                           //이름 받는 구간
                   let user_name = await Input.getUserInput();                  
                   console.log('사용하실 아이디를 입력해주세요');               //아이디 받는 구간
-                  let user_id = await Input.getUserInput();                   
+                  let user_id = await Input.getUserInput();
+                  let exam_id=await Examine.userid_exam(user_id,connection );
+                    while(exam_id === 1 ){
+                    user_id = await Input.getUserInput();
+                    exam_id=await Examine.userid_exam(user_id,connection );
+                    }
                   console.log('사용하실 비밀번호를 입력해주세요');             //비밀번호 받는구간
                   let user_pwd = await Input.getUserInput();                  
                   console.log('비밀번호 확인');                                //비밀번호 확인 받는구간
-                  let user_repwd = await Input.getUserInput();                
+                  let user_repwd = await Input.getUserInput();
+                  while(user_pwd != user_repwd){
+                    console.log('비밀번호가 다릅니다 다시입력해주세요');
+                    user_repwd = await Input.getUserInput();
+                  }                        
                   console.log('휴대폰 번호를 입력해주세요');                   //휴대폰 번호 받는구간 
                   let user_phone = await Input.getUserInput();                
                   console.log('이메일을 입력해주세요');                        //이메일 받는 구간
