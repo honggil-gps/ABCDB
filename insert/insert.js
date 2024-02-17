@@ -25,12 +25,45 @@ connection.connect((err)=> {
 function pro_write(num, name, unit, size, price, connection){
 connection.connect((err)=> {
 //삽입 부분
-  let sql = `INSERT INTO product(product_num, product_name , unit, size, prize) VALUES(?,?,?,?,?)c`;
+  let sql = `INSERT INTO product(product_num, product_name , unit, size, prize) VALUES(?,?,?,?,?)`;
 
   let pro_value=[num,name,unit,size,price];
-  connection.query(sql, pro_value, (err, rsult, fields)=>{
+  connection.query(sql, pro_value, (err, result, fields)=>{
     console.log('삽입되었습니다');
   });
   });
 };
-module.exports = {write, pro_write};
+function ord_write(Order_num, userid, product_num, count, price, connection){
+  connection.connect((err)=> {
+  //삽입 부분
+    let sql = `INSERT INTO orders(Order_num,userid,product_num, count, price) VALUES(?,?,?,?,?)`;
+  
+    let ord_value=[Order_num,userid,product_num,count,price];
+    connection.query(sql, ord_value, (err, result, fields)=>{
+      console.log('삽입되었습니다');
+    });
+    });
+  };
+  function cart_write(product_num, userid , connection){
+    connection.connect((err)=> {
+    //삽입 부분
+      let sql = `INSERT INTO cart(product_num, userid) VALUES(?,?)`;
+    
+      let cart_value=[product_num,userid];
+      connection.query(sql, cart_value, (err, result, fields)=>{
+        console.log('삽입되었습니다');
+      });
+      });
+    };
+    function pay_write(num, name, unit, size, price, connection){
+      connection.connect((err)=> {
+      //삽입 부분
+        let sql = `INSERT INTO payment(Order_num, card_num) VALUES(?,?)`;
+      
+        let pay_value=[num,name,unit,size,price];
+        connection.query(sql, pay_value, (err, result, fields)=>{
+          console.log('삽입되었습니다');
+        });
+        });
+      };
+module.exports = {write, pro_write, ord_write,cart_write,pay_write};
