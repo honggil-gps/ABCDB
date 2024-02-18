@@ -8,7 +8,7 @@ let connection = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
-function delete_infor(table, value, connection) {
+function delete_infor(table, value,connection) {
   // 데이터베이스에 연결
   connection.connect((err) => {
 

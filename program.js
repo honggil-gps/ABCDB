@@ -39,24 +39,10 @@ async function main(){
           let select = await Input.getUserInput();             //select에 입력된 값 저장
 
               if(select === '1'){                                //1번이 입력되면
-                // let brand_num;
                 console.log(`${manager}번 메뉴 (입력/추가) 선택하셨습니다.`) //1번 메뉴 선택했습니다.
                 console.log(`어떤 브랜드의 제품이신가요?`)                  //brand 선택
-                console.log(`1.나이키 2.아디다스 3.반스 4.퓨마 5.컨버스`)     //brand_num에 저장
-                let brand_num = await Input.getUserInput();             
-                // if(brand === '1'){                                  //브랜드 선택 -> 숫자로 저장
-                //   brand_num = 100;
-                // }else if(brand ==='2'){
-                //   brand_num = 200;
-                // }else if(brand ==='3'){
-                //   brnad_num = 300;
-                // }else if(brand ==='4'){
-                //   brnad_num = 400;
-                // }else if(brand ==='5'){
-                //   brnad_num = 500;
-                // }else{
-                //   console.log('브랜드를 잘못 선택하셨습니다.')
-                // }
+                console.log(`1.나이키 2.아디다스 3.반스 4.퓨마 5.컨버스`)     //brand에 저장
+                let brand = await Input.getUserInput();             
                 console.log('사이즈를 입력해주세요')                        //size 받는 구간 
                 let size = await Input.getUserInput();                  
                 console.log('모델번호를 입력해주세요');                     //사용하고픈 제품코드 01~99
@@ -68,16 +54,18 @@ async function main(){
                 console.log('가격을 입력해주세요');                        //1unit당 가격 
                 let price = await Input.getUserInput();                
         
-                Write.pro_write(size, brand_num, num, name, unit, price,connection)            //select에 입력된 값 저장
+                Write.pro_write(table, size, brand, num, name, unit, price,connection)            //select에 입력된 값 저장
               }else if(select ==='2'){                            //2번이 입력되면
               console.clear();
+              let PK = 'product_num'
               console.log(`${manager}번 (데이터 수정) 선택하셨습니다.`)   //2번 메뉴 선택했습니다.
               console.log(`기존 내용은 다음과 같습니다.`);                 //기존내용 ,다음에 할 작업을 고르세요
-              Info.infor(`${table}`,connection);
+              await Info.infor(`${table}`,connection);
+              await wait(1000);
               console.log(`1.제품번호 2.제품이름 3.제품수량 4.제품사이즈 5.제품가격 6.종료`);       // 5개의 메뉴 보여줌
               console.log(`수정해야할 목록의 번호를 입력해주세요`);
               let changeinfo = await Input.getUserInput();                   //select에 입력된 값 저장
-              console.log(`수정하고싶은 row의 주문번호를 입력해주세요`);
+              console.log(`수정하고싶은 제품번호를 입력해주세요`);
               let id = await Input.getUserInput();
                 if(changeinfo==='1'){ 
                   let attr = 'num';
@@ -130,15 +118,15 @@ async function main(){
               }else if(select ==='3'){                              //3번이 입력되면
                 console.log(`${manager}번 (데이터 삭제) 선택하셨습니다.`)    //3번 데이터 삭제를 선택하셨습니다.
                 console.log(`기존 내용은 다음과 같습니다.`)               //기존내용 ,다음에 할 작업을 고르세요
-                Info.infor(`${table}`,connection);
+                await Info.infor(`${table}`,connection);
+                await wait(1000);
                 console.log(`어떤 줄을 삭제하시겠습니까?`)                //어떤 줄 삭제?
                 let value = await Input.getUserInput();
                 Delete.delete_infor(`${table}`,`${value}`,connection);
                 console.log(`해당 정보가 삭제되었습니다.`)               //기존내용 ,다음에 할 작업을 고르세요
-                Info.infor(`${table}`,connection);
               }else if(select ==='4'){                             //4번이 입력되면
                 console.log(`${manager}번 (데이터 보기) 선택하셨습니다.`)    //4번 데이터 삭제를 선택하셨습니다.
-                Info.infor(`${table}`,connection);
+                await Info.infor(`${table}`,connection);
               }else if(select ==='5'){                              //5번이 입력되면
                 console.log('프로그램 종료');
                 connection.end();
@@ -149,6 +137,7 @@ async function main(){
           }
           else if(manager === '2'){                      // 2. 회원을 고른다면
             let table = 'user';
+            let PK = 'user_id';
             console.log(`${manager}번 메뉴 (회원) 선택하셨습니다.`)          //1번 메뉴 선택했습니다.
             console.log(`다음에 할 작업을 고르세요`)                          //다음에 할 작업을 고르세요
             console.log(`1.입력/추가 2.수정 3.삭제 4.데이터 보기 5.종료`)       // 5개의 메뉴 보여줌
@@ -186,19 +175,65 @@ async function main(){
                 else if(select ==='2'){                                //2번이 입력되면
                   console.log(`${select}}번 (데이터 수정) 선택하셨습니다.`)   //2번 메뉴 선택했습니다.
                   console.log(`기존 내용은 다음과 같습니다.`)                 //기존내용 ,다음에 할 작업을 고르세요
-                  Info.infor(`${table}`,connection);
+                  await Info.infor(`${table}`,connection);
+                  await wait(1000);
+                  console.log(`수정하고자 하는 회원의 ID를 입력해주세요`);
+                  let id = await Input.getUserInput();
+                  console.log('정보수정');
+                  console.log(`1.이름 2.비밀번호 3.전화번호 4.이메일 5.종료`);
+                  let changeinfo = await Input.getUserInput();
+                  if(changeinfo==='1'){ 
+                    let attr = 'name';
+                    console.log('이름 >');
+                    let change = await Input.getUserInput();
+                    console.log(`${change}로 변경 완료되었습니다.`)
+                    Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                    console.log('~~~~~~~~~~');
+                    console.log('');
+                  }else if(changeinfo==='2'){
+                    let attr = 'pwd';
+                    console.log('비밀번호 >');  
+                    let change = await Input.getUserInput();
+                    console.log(`${change}로 변경 완료되었습니다.`)
+                    Update.update( id, change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                    console.log('~~~~~~~~~~');
+                    console.log('');
+                  }else if(changeinfo==='3'){ 
+                    let attr = 'phone';
+                    console.log('전화번호 >');
+                    let change = await Input.getUserInput();
+                    console.log(`${change}로 변경 완료되었습니다.`)
+                    Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                    console.log('~~~~~~~~~~');
+                    console.log('');
+                  }else if(changeinfo==='4'){
+                    let attr = 'email';
+                    console.log('이메일 >');
+                    let change = await Input.getUserInput();
+                    console.log(`${change}로 변경 완료되었습니다.`) 
+                    Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                    console.log('~~~~~~~~~~');
+                    console.log('');
+                  }else if(changeinfo==='5'){ 
+                    console.log('종료되었습니다~');
+                    console.log('~~~~~~~~~~');
+                    connection.end();
+                    process.exit();
+                  }else{ 
+                      console.log('메뉴를 잘못 선택하셨습니다.');
+                  };
                   // PK 값 입력을 통해서 원하는 row 수정
                 }else if(select ==='3'){                              //3번이 입력되면
                   console.log(`${manager}번 (데이터 삭제) 선택하셨습니다.`)    //3번 데이터 삭제를 선택하셨습니다.
                   console.log(`기존 내용은 다음과 같습니다.`)               //기존내용 ,다음에 할 작업을 고르세요
                   await Info.infor(`${table}`,connection);
-                  console.log(`어떤 줄을 삭제하시겠습니까?`)
+                  await wait(1000);
+                  console.log(`삭제하고싶은 회원의 아이디를 입력해주세요`)
                   let value = await Input.getUserInput();
                   Delete.delete_infor(`${table}`,`${value}`,connection);
-                  console.log(`해당 정보가 삭제되었습니다.`)               //기존내용 ,다음에 할 작업을 고르세요
-                  //await Info.infor(`${table}`,connection);               //어떤 줄 삭제?
+                  console.log(`해당 정보가 삭제되었습니다.`)                  //데이터 삭제 완료
                 }else if(select ==='4'){                             //4번이 입력되면
-                  console.log(`${manager}번 (데이터 보기) 선택하셨습니다.`)    //4번 데이터 삭제를 선택하셨습니다.
+                  console.log(`${manager}번 (데이터 보기) 선택하셨습니다.`)    //4번 데이터 보기를 선택하셨습니다.
                   await Info.infor(`${table}`,connection);
                 }else if(select ==='5'){                              //5번이 입력되면
                   console.log('프로그램 종료');
@@ -233,10 +268,17 @@ async function main(){
               console.clear;
               console.log(`${select}}번 (데이터 수정) 선택하셨습니다.`);   //2번 메뉴 선택했습니다.
               console.log(`기존 내용은 다음과 같습니다.`);                 //기존내용 ,다음에 할 작업을 고르세요
-              Info.infor(`${table}`,connection);
+              await Info.infor(`${table}`,connection);
+              await wait(1000);
               console.log(`1.주문번호 2.회원번호 3.물품번호 4.수량 5.가격 6.종료`);       // 5개의 메뉴 보여줌
               console.log(`수정해야할 목록의 번호를 입력해주세요`);
-              let changeinfo = await Input.getUserInput();                   //select에 입력된 값 저장
+              let changeinfo = await Input.getUserInput();   
+              if(changeinfo === '6'){
+                console.log('종료되었습니다~');
+                console.log('~~~~~~~~~~');
+                connection.end();
+                process.exit();
+              }else{
               console.log(`수정하고싶은 row의 주문번호를 입력해주세요`);
               let id = await Input.getUserInput();
                 if(changeinfo==='1'){ 
@@ -287,16 +329,18 @@ async function main(){
                 }else{ 
                     console.log('메뉴를 잘못 선택하셨습니다.');
                 };
+              };
               }else if(select ==='3') {
                 console.log(`${manager}번 (데이터 삭제) 선택하셨습니다.`);
                 console.log(`기존 내용은 다음과 같습니다.`);
-                Info.infor(`${table}`,connection);
+                await Info.infor(`${table}`,connection);
+                await wait(1000);
                 console.log(`삭제할 주문번호를 입력해주세요`);
                 let Ord_num = await Input.getUserInput();
                 Delete.delete_infor(`${table}`,`${Ord_num}`,connection)
               }else if(select === '4'){
                 console.log(`${select}번 (데이터 보기) 선택하셨습니다.`)
-                Info.infor(`${table}`,connection)
+                await Info.infor(`${table}`,connection)
               }else if(select===`5`){
                 console.log('프로그램 종료');
                 connection.end();
@@ -314,7 +358,7 @@ async function main(){
           console.log('이름을 입력해주세요')                           //이름 받는 구간
           let name = await Input.getUserInput();                  
           console.log('사용하실 아이디를 입력해주세요');               //아이디 받는 구간
-          let attr='userid';              
+          let attr='user_id';              
           let id = await Input.getUserInput();
           let exam_id=await Examine.userid_exam(`${table}`,`${attr}`,id,connection );
           while(exam_id === 1 ){
@@ -340,7 +384,7 @@ async function main(){
           Write.user_write(table, id, pwd, email, phone, address, name, connection);
           }
       else if(customer === '2'){
-        let PK = 'userid';
+        let PK = 'user_id';
         console.log('아이디를 입력해주세요');
         let id = await Input.getUserInput();
         console.log(`입력하신 ID는 ${id}입니다.`);
@@ -364,7 +408,6 @@ async function main(){
             console.log(`${change}로 변경 완료되었습니다.`)
             Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
             console.log('~~~~~~~~~~');
-            // 
             console.log('');
           }else if(changeinfo==='2'){
             let attr = 'pwd';
@@ -373,7 +416,6 @@ async function main(){
             console.log(`${change}로 변경 완료되었습니다.`)
             Update.update( id, change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
             console.log('~~~~~~~~~~');
-            // Info.infor('user');
             console.log('');
           }else if(changeinfo==='3'){ 
             let attr = 'phone';
@@ -382,7 +424,6 @@ async function main(){
             console.log(`${change}로 변경 완료되었습니다.`)
             Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
             console.log('~~~~~~~~~~');
-            // Info.infor('user');
             console.log('');
           }else if(changeinfo==='4'){
             let attr = 'email';
@@ -391,7 +432,6 @@ async function main(){
             console.log(`${change}로 변경 완료되었습니다.`) 
             Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
             console.log('~~~~~~~~~~');
-            // Info.infor('user');
             console.log('');
           }else if(changeinfo==='5'){ 
             console.log('종료되었습니다~');
@@ -413,10 +453,8 @@ async function main(){
             console.log('메뉴를 잘못 선택하셨습니다.');
         };
         await wait(1000);
-        // console.clear();
       };
-    
-    }else if(menu==='3'){ 
+    }else if(menu==='3'){                                //3번 선택 (삭제)
       console.log('프로그램 종료');
       connection.end();
       process.exit();
