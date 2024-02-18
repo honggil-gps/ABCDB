@@ -54,7 +54,8 @@ async function main(){
                 console.log('가격을 입력해주세요');                        //1unit당 가격 
                 let price = await Input.getUserInput();                
         
-                Write.pro_write(table, size, brand, num, name, unit, price,connection)            //select에 입력된 값 저장
+                Write.pro_write(table, size, brand, num, name, unit, price,connection) 
+                await wait(1000);           //select에 입력된 값 저장
               }else if(select ==='2'){                            //2번이 입력되면
               console.clear();
               let PK = 'product_num'
@@ -71,8 +72,17 @@ async function main(){
                   let attr = 'num';
                   console.log('제품번호 >');
                   let change = await Input.getUserInput();
+
+                  let attr_ex='product_num';              
+                  let exam_id=await Examine.userid_exam(`${table}`,`${attr_ex}`,change,connection );
+                    while(exam_id === 1 ){
+                    change = await Input.getUserInput();
+                    exam_id=await Examine.userid_exam(`${table}`,`${attr_ex}`,change,connection);
+                    }
+
                   console.log(`${change}로 변경 완료되었습니다.`)
                   Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                  await wait(1000);
                   console.log('~~~~~~~~~~');
                   console.log('');
                 }else if(changeinfo==='2'){
@@ -81,6 +91,7 @@ async function main(){
                   let change = await Input.getUserInput();
                   console.log(`${change}로 변경 완료되었습니다.`)
                   Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                  await wait(1000);
                   console.log('~~~~~~~~~~');
                   console.log('');
                 }else if(changeinfo==='3'){ 
@@ -89,6 +100,7 @@ async function main(){
                   let change = await Input.getUserInput();
                   console.log(`${change}로 변경 완료되었습니다.`)
                   Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                  await wait(1000);
                   console.log('~~~~~~~~~~');
                   console.log('');
                 }else if(changeinfo==='4'){
@@ -97,6 +109,7 @@ async function main(){
                   let change = await Input.getUserInput();
                   console.log(`${change}로 변경 완료되었습니다.`) 
                   Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                  await wait(1000);
                   console.log('~~~~~~~~~~');
                   console.log('');
                 }else if(changeinfo==='5'){
@@ -105,6 +118,7 @@ async function main(){
                   let change = await Input.getUserInput();
                   console.log(`${change}로 변경 완료되었습니다.`) 
                   Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                  await wait(1000);
                   console.log('~~~~~~~~~~');
                   console.log('');
                 }else if(changeinfo==='6'){ 
@@ -127,6 +141,7 @@ async function main(){
               }else if(select ==='4'){                             //4번이 입력되면
                 console.log(`${manager}번 (데이터 보기) 선택하셨습니다.`)    //4번 데이터 삭제를 선택하셨습니다.
                 await Info.infor(`${table}`,connection);
+                await wait(1000);
               }else if(select ==='5'){                              //5번이 입력되면
                 console.log('프로그램 종료');
                 connection.end();
@@ -148,7 +163,7 @@ async function main(){
                   console.log('이름을 입력해주세요')                           //이름 받는 구간
                   let user_name = await Input.getUserInput();                  
                   console.log('사용하실 아이디를 입력해주세요');//아이디 받는 구간
-                  let attr='userid';              
+                  let attr='user_id';              
                   let user_id = await Input.getUserInput();
                   let exam_id=await Examine.userid_exam(`${table}`,`${attr}`,user_id,connection );
                     while(exam_id === 1 ){
@@ -170,7 +185,8 @@ async function main(){
                   console.log('주소를 입력해주세요');                          //주소 받는 구간   
                   let user_address = await Input.getUserInput();
         
-                  Write.user_write(user_id, user_pwd, user_email, user_phone, user_address, user_name, connection)
+                  Write.user_write(table ,user_id, user_pwd, user_email, user_phone, user_address, user_name, connection)
+                  await wait(1000);
                   }
                 else if(select ==='2'){                                //2번이 입력되면
                   console.log(`${select}}번 (데이터 수정) 선택하셨습니다.`)   //2번 메뉴 선택했습니다.
@@ -188,6 +204,7 @@ async function main(){
                     let change = await Input.getUserInput();
                     console.log(`${change}로 변경 완료되었습니다.`)
                     Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                    await wait(1000);
                     console.log('~~~~~~~~~~');
                     console.log('');
                   }else if(changeinfo==='2'){
@@ -196,6 +213,7 @@ async function main(){
                     let change = await Input.getUserInput();
                     console.log(`${change}로 변경 완료되었습니다.`)
                     Update.update( id, change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                    await wait(1000);
                     console.log('~~~~~~~~~~');
                     console.log('');
                   }else if(changeinfo==='3'){ 
@@ -204,6 +222,7 @@ async function main(){
                     let change = await Input.getUserInput();
                     console.log(`${change}로 변경 완료되었습니다.`)
                     Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                    await wait(1000);
                     console.log('~~~~~~~~~~');
                     console.log('');
                   }else if(changeinfo==='4'){
@@ -212,6 +231,7 @@ async function main(){
                     let change = await Input.getUserInput();
                     console.log(`${change}로 변경 완료되었습니다.`) 
                     Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                    await wait(1000);
                     console.log('~~~~~~~~~~');
                     console.log('');
                   }else if(changeinfo==='5'){ 
@@ -235,6 +255,7 @@ async function main(){
                 }else if(select ==='4'){                             //4번이 입력되면
                   console.log(`${manager}번 (데이터 보기) 선택하셨습니다.`)    //4번 데이터 보기를 선택하셨습니다.
                   await Info.infor(`${table}`,connection);
+                  await wait(1000);
                 }else if(select ==='5'){                              //5번이 입력되면
                   console.log('프로그램 종료');
                   connection.end();
@@ -264,6 +285,7 @@ async function main(){
               console.log('가격을 입력하세요');                         //가격 입력
               let price = await Input.getUserInput();
               Write.orders_write(table ,num, userid, product_num, count, price, connection)
+              await wait(1000);
               }else if(select ==='2'){                                //2번이 입력되면
               console.clear;
               console.log(`${select}}번 (데이터 수정) 선택하셨습니다.`);   //2번 메뉴 선택했습니다.
@@ -285,8 +307,17 @@ async function main(){
                   let attr = 'num';
                   console.log('주문번호 >');
                   let change = await Input.getUserInput();
+                  
+                  let attr_ex='orders_num';              
+                  let exam_id=await Examine.userid_exam(`${table}`,`${attr_ex}`,change,connection );
+                    while(exam_id === 1 ){
+                    change = await Input.getUserInput();
+                    exam_id=await Examine.userid_exam(`${table}`,`${attr_ex}`,change,connection);
+                    }
+
                   console.log(`${change}로 변경 완료되었습니다.`)
                   Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                  await wait(1000);
                   console.log('~~~~~~~~~~');
                   console.log('');
                 }else if(changeinfo==='2'){
@@ -295,6 +326,7 @@ async function main(){
                   let change = await Input.getUserInput();
                   console.log(`${change}로 변경 완료되었습니다.`)
                   Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                  await wait(1000);
                   console.log('~~~~~~~~~~');
                   console.log('');
                 }else if(changeinfo==='3'){ 
@@ -303,6 +335,7 @@ async function main(){
                   let change = await Input.getUserInput();
                   console.log(`${change}로 변경 완료되었습니다.`)
                   Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                  await wait(1000);
                   console.log('~~~~~~~~~~');
                   console.log('');
                 }else if(changeinfo==='4'){
@@ -311,6 +344,7 @@ async function main(){
                   let change = await Input.getUserInput();
                   console.log(`${change}로 변경 완료되었습니다.`) 
                   Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                  await wait(1000);
                   console.log('~~~~~~~~~~');
                   console.log('');
                 }else if(changeinfo==='5'){
@@ -319,6 +353,7 @@ async function main(){
                   let change = await Input.getUserInput();
                   console.log(`${change}로 변경 완료되었습니다.`) 
                   Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+                  await wait(1000);
                   console.log('~~~~~~~~~~');
                   console.log('');
                 }else if(changeinfo==='6'){ 
@@ -341,6 +376,7 @@ async function main(){
               }else if(select === '4'){
                 console.log(`${select}번 (데이터 보기) 선택하셨습니다.`)
                 await Info.infor(`${table}`,connection)
+                await wait(1000);
               }else if(select===`5`){
                 console.log('프로그램 종료');
                 connection.end();
@@ -382,9 +418,10 @@ async function main(){
           let address = await Input.getUserInput();
 
           Write.user_write(table, id, pwd, email, phone, address, name, connection);
+          await wait(1000);
           }
       else if(customer === '2'){
-        let PK = 'user_id';
+        let PK = 'cart_user_id';
         console.log('아이디를 입력해주세요');
         let id = await Input.getUserInput();
         console.log(`입력하신 ID는 ${id}입니다.`);
@@ -407,6 +444,7 @@ async function main(){
             let change = await Input.getUserInput();
             console.log(`${change}로 변경 완료되었습니다.`)
             Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+            await wait(1000);
             console.log('~~~~~~~~~~');
             console.log('');
           }else if(changeinfo==='2'){
@@ -415,6 +453,7 @@ async function main(){
             let change = await Input.getUserInput();
             console.log(`${change}로 변경 완료되었습니다.`)
             Update.update( id, change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+            await wait(1000);
             console.log('~~~~~~~~~~');
             console.log('');
           }else if(changeinfo==='3'){ 
@@ -423,6 +462,7 @@ async function main(){
             let change = await Input.getUserInput();
             console.log(`${change}로 변경 완료되었습니다.`)
             Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+            await wait(1000);
             console.log('~~~~~~~~~~');
             console.log('');
           }else if(changeinfo==='4'){
@@ -431,6 +471,7 @@ async function main(){
             let change = await Input.getUserInput();
             console.log(`${change}로 변경 완료되었습니다.`) 
             Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+            await wait(1000);
             console.log('~~~~~~~~~~');
             console.log('');
           }else if(changeinfo==='5'){ 
