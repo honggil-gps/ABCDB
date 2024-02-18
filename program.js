@@ -38,15 +38,23 @@ async function main(){
           console.log(`1.입력/추가 2.수정 3.삭제 4.데이터 보기 5.종료`)// 5개의 메뉴 보여줌
           let select = await Input.getUserInput();             //select에 입력된 값 저장
               if(select === '1'){                                //1번이 입력되면
-              console.log(`${manager}번 메뉴 (입력/추가) 선택하셨습니다.`) //1번 메뉴 선택했습니다.
-              console.log(`어떤 브랜드의 제품이신가요?`)                //다음에 할 작업을 고르세요
-              console.log(`1.나이키 2.아디다스 3.반스 4.퓨마 5.컨버스`)// 5개의 메뉴 보여줌
-              let select = await Input.getUserInput();             //select에 입력된 값 저장
-                if(select === `1`){
-                  //let nike = 100;
-                  // console.log(`${nike}xx${size}`)
-                  // let sql= 
-              }// 추가 or 수정필요 1.
+                console.log(`${manager}번 메뉴 (입력/추가) 선택하셨습니다.`) //1번 메뉴 선택했습니다.
+                console.log(`어떤 브랜드의 제품이신가요?`)                //다음에 할 작업을 고르세요
+                console.log(`1.나이키 2.아디다스 3.반스 4.퓨마 5.컨버스`)
+                let brand = await Input.getUserInput();// 5개의 메뉴 보여줌
+                console.log('사이즈를 입력해주세요')                           //이름 받는 구간
+                let size = await Input.getUserInput();                  
+                console.log('모델번호를 입력해주세요');               //아이디 받는 구간
+                let num = await Input.getUserInput();                   
+                console.log('모델이름을 입력해주세요');             //비밀번호 받는구간
+                let name = await Input.getUserInput();                  
+                console.log('unit을 입력해주세요');                                //비밀번호 확인 받는구간
+                let unit = await Input.getUserInput();                
+                console.log('가격을 입력해주세요');                   //휴대폰 번호 받는구간 
+                let price = await Input.getUserInput();                
+        
+                Write.pro_write(size, brand, num, name, unit, price,connection)            //select에 입력된 값 저장
+              // 추가 or 수정필요 1.
               }else if(select ==='2'){                            //2번이 입력되면
                 console.log(`${manager}번 (데이터 수정) 선택하셨습니다.`)   //2번 메뉴 선택했습니다.
                 console.log(`기존 내용은 다음과 같습니다.`)                 //기존내용 ,다음에 할 작업을 고르세요
