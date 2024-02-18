@@ -1,10 +1,10 @@
-const Input = require('./insert/enrol.js');
 let mysql = require('mysql2');
-const Info = require('./information/info.js');
-const Write =require('./insert/insert.js');
-const Update=require('./update/update.js');
-const Delete = require('./delete/delete.js');
-const Examine = require('./examine/examine.js');
+const Input = require('./functions/insert/userInput.js');
+const Info = require('./functions/information/info.js');
+const Write =require('./functions/insert/insert.js');
+const Update=require('./functions/change/update.js');
+const Delete = require('./functions/delete/delete.js');
+const Examine = require('./functions/examine/examine.js');
 
 let connection = mysql.createConnection({
   host: process.env.DB_HOST,
