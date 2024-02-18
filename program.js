@@ -39,24 +39,24 @@ async function main(){
           let select = await Input.getUserInput();             //select에 입력된 값 저장
 
               if(select === '1'){                                //1번이 입력되면
-                let brand_num;
+                // let brand_num;
                 console.log(`${manager}번 메뉴 (입력/추가) 선택하셨습니다.`) //1번 메뉴 선택했습니다.
                 console.log(`어떤 브랜드의 제품이신가요?`)                  //brand 선택
                 console.log(`1.나이키 2.아디다스 3.반스 4.퓨마 5.컨버스`)     //brand_num에 저장
-                let brand = await Input.getUserInput();             
-                if(brand === '1'){                                  //브랜드 선택 -> 숫자로 저장
-                  brand_num = 100;
-                }else if(brand ==='2'){
-                  brand_num = 200;
-                }else if(brand ==='3'){
-                  brnad_num = 300;
-                }else if(brand ==='4'){
-                  brnad_num = 400;
-                }else if(brand ==='5'){
-                  brnad_num = 500;
-                }else{
-                  console.log('브랜드를 잘못 선택하셨습니다.')
-                }
+                let brand_num = await Input.getUserInput();             
+                // if(brand === '1'){                                  //브랜드 선택 -> 숫자로 저장
+                //   brand_num = 100;
+                // }else if(brand ==='2'){
+                //   brand_num = 200;
+                // }else if(brand ==='3'){
+                //   brnad_num = 300;
+                // }else if(brand ==='4'){
+                //   brnad_num = 400;
+                // }else if(brand ==='5'){
+                //   brnad_num = 500;
+                // }else{
+                //   console.log('브랜드를 잘못 선택하셨습니다.')
+                // }
                 console.log('사이즈를 입력해주세요')                        //size 받는 구간 
                 let size = await Input.getUserInput();                  
                 console.log('모델번호를 입력해주세요');                     //사용하고픈 제품코드 01~99

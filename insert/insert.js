@@ -43,12 +43,12 @@ function cart_write(product_num, userid , connection){
     });
     });
   };
-function pay_write(num, name, unit, size, price, connection){
+function pay_write(order_num, card_num, connection){
   connection.connect((err)=> {
   //삽입 부분
     let sql = `INSERT INTO payment(Order_num, card_num) VALUES(?,?)`;
   
-    let pay_value=[num,name,unit,size,price];
+    let pay_value=[order_num, card_num];
     connection.query(sql, pay_value, (err, result, fields)=>{
       console.log('삽입되었습니다');
     });
