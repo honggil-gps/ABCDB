@@ -47,7 +47,8 @@ function ord_write(Order_num, userid, product_num, count, price, connection){
       };
 
 function pro_write(size, brand, num, name, unit, price, connection) {
-  let make_product_num = (size * 100000) + (brand * 10000) + num*1;
+  // let make_product_num = (size * 100000) + (brand * 10000) + num*1;
+  let make_product_num = (size * 1) + (brand * 10000000) + (num*1000);
   console.log(`${make_product_num}`);
   connection.connect((err) => {
     let check =0;
@@ -66,7 +67,8 @@ function pro_write(size, brand, num, name, unit, price, connection) {
         while(1){
           num = num+1;
           let check2 =0;
-          make_product_num = (size * 100000) + (brand * 10000) + num*1;
+          // make_product_num = (size * 100000) + (brand * 10000) + num*1;
+          make_product_num = (size * 1) + (brand * 10000000) + (num*1000);
           for (let i = 0; i < results.length; i++) {
             if (results[i].product_num == make_product_num) {
               check2 =1;
