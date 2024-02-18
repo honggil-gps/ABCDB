@@ -10,7 +10,7 @@ let connection = mysql.createConnection({
 function user_write (table, id, pwd, email, phone, address, name, connection){
 connection.connect((err)=> {
 //삽입 부분
-  let sql = `INSERT INTO ${table}(${table}id, ${table}_pwd , ${table}_email, ${table}_phone, ${table}_address, ${table}_name) VALUES(?,?,?,?,?,?)`;
+  let sql = `INSERT INTO ${table}(${table}_id, ${table}_pwd , ${table}_email, ${table}_phone, ${table}_address, ${table}_name) VALUES(?,?,?,?,?,?)`;
 
   let user_value=[id, pwd, email, phone, address, name];
   connection.query(sql, user_value, (err, result, fields)=>{
@@ -21,7 +21,7 @@ connection.connect((err)=> {
 function orders_write(table, num, userid, product_num, count, price, connection){
   connection.connect((err)=> {
   //삽입 부분
-    let sql = `INSERT INTO orders(${table}_num,${table}_userid,${table}_product_num,${table}_count, ${table}_price) VALUES(?,?,?,?,?)`;
+    let sql = `INSERT INTO orders(${table}_num,${table}_user_id,${table}_product_num,${table}_count, ${table}_price) VALUES(?,?,?,?,?)`;
   
     let ord_value=[num,userid,product_num,count,price];
     connection.query(sql, ord_value, (err, result, fields)=>{
@@ -35,7 +35,7 @@ function orders_write(table, num, userid, product_num, count, price, connection)
 function cart_write(product_num, userid , connection){
   connection.connect((err)=> {
   //삽입 부분
-    let sql = `INSERT INTO cart(product_num, userid) VALUES(?,?)`;
+    let sql = `INSERT INTO cart(cart_product_num, cart_user_id) VALUES(?,?)`;
   
     let cart_value=[product_num,userid];
     connection.query(sql, cart_value, (err, result, fields)=>{
@@ -46,7 +46,7 @@ function cart_write(product_num, userid , connection){
 function pay_write(num, name, unit, size, price, connection){
   connection.connect((err)=> {
   //삽입 부분
-    let sql = `INSERT INTO payment(Order_num, card_num) VALUES(?,?)`;
+    let sql = `INSERT INTO payment(payment_order_num, payment_card_num) VALUES(?,?)`;
   
     let pay_value=[num,name,unit,size,price];
     connection.query(sql, pay_value, (err, result, fields)=>{
@@ -54,9 +54,9 @@ function pay_write(num, name, unit, size, price, connection){
     });
     });
   };
-function pro_write(size, brand, num, name, unit, price, connection) {
+function pro_write(table, size, brand, num, name, unit, price, connection) {
   // let make_product_num = (size * 100000) + (brand * 10000) + num*1;
-  let make_product_num = (size * 1) + (brand * 10000000) + (num*1000);
+  let make_product_num = (num * 1) + (brand * 10000000) + (size*100);
   console.log(`${make_product_num}`);
   connection.connect((err) => {
     let check =0;
@@ -76,7 +76,7 @@ function pro_write(size, brand, num, name, unit, price, connection) {
           num = num+1;
           let check2 =0;
           // make_product_num = (size * 100000) + (brand * 10000) + num*1;
-          make_product_num = (size * 1) + (brand * 10000000) + (num*1000);
+          make_product_num = (num * 1) + (brand * 10000000) + (size*100);
           for (let i = 0; i < results.length; i++) {
             if (results[i].product_num == make_product_num) {
               check2 =1;
@@ -87,7 +87,7 @@ function pro_write(size, brand, num, name, unit, price, connection) {
           }
         }
       }
-      let sql = `INSERT INTO product(product_num, product_name, unit, size, price) VALUES(?,?,?,?,?)`;
+      let sql = `INSERT INTO product(${table}_num, ${table}_name, ${table}_unit, ${table}_size, ${table}_price) VALUES(?,?,?,?,?)`;
       let pro_value = [make_product_num, name, unit, size, price];
       connection.query(sql, pro_value, (err, result, fields) => {
         if (err) {
