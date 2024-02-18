@@ -114,7 +114,7 @@ async function main(){
                   console.log('주소를 입력해주세요');                          //주소 받는 구간   
                   let user_address = await Input.getUserInput();
         
-                  Write.write(user_id, user_pwd, user_email, user_phone, user_address, user_name, connection)
+                  Write.user_write(user_id, user_pwd, user_email, user_phone, user_address, user_name, connection)
                   }
                 else if(select ==='2'){                                //2번이 입력되면
                   console.log(`${select}}번 (데이터 수정) 선택하셨습니다.`)   //2번 메뉴 선택했습니다.
@@ -162,7 +162,7 @@ async function main(){
               let count = await Input.getUserInput();                
               console.log('가격을 입력하세요');                         //가격 입력
               let price = await Input.getUserInput();
-              Write.orders_write(Order_num, userid, product_num, count, price, connection)
+              Write.ord_write(Order_num, userid, product_num, count, price, connection)
               }
             else if(select ==='2'){                                //2번이 입력되면
               console.log(`${select}}번 (데이터 수정) 선택하셨습니다.`)   //2번 메뉴 선택했습니다.
@@ -208,7 +208,7 @@ async function main(){
           console.log('주소를 입력해주세요');                          //주소 받는 구간   
           let user_address = await Input.getUserInput();
 
-          Write.write(user_id, user_pwd, user_email, user_phone, user_address, user_name, connection);
+          Write.user_write(user_id, user_pwd, user_email, user_phone, user_address, user_name, connection);
           }
       else if(customer === '2'){
         let PK = 'userid';
