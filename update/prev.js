@@ -1,9 +1,10 @@
-const Input = require('../insert/enrol.js');
 let mysql = require('mysql2');
-const Info = require('../information/info.js');
-const Write =require('../insert/insert.js');
-const Update=require('../update/update.js');
-const Delete = require('../delete/delete.js');
+const Input = require('../functions/insert/userInput.js');
+const Info = require('../functions/information/info.js');
+const Write =require('../functions/insert/insert.js');
+const Update=require('../functions/change/update.js');
+const Delete = require('../functions/delete/delete.js');
+const Examine = require('../functions/examine/examine.js');
 
 let connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -190,41 +191,48 @@ async function membership() {
     console.log('뒤로가기 위해 <back>를 입력해주세요~')
     let menu = await Input.getUserInput();
     if (menu.toLowerCase() === 'back') {
-      step1_back();
+      membership();
     }
   }
+
+//로그인된 상태로 다시 Back하는 ~~
+async function loginstatus_back(){
+  console.log('뒤로가기 위해 <back>를 입력해주세요~')
+  let menu = await Input.getUserInput();
+  if (menu.toLowerCase() === 'back') {
+    loginstatus();
+  }
+}
 // step1 > 2.회원 > 2.로그인
 async function login() {
   console.log('아이디를 입력해주세요');
         let id = await Input.getUserInput();
         console.log(`입력하신 ID는 ${id}입니다.`);
         console.log(`다음에 할 작업을 고르세요`)                          //다음에 할 작업을 고르세요
-        console.log(`1.내정보 2.정보수정 3.상품보기 4.뒤로가기 4.종료`) 
-        console.log(`메뉴를 선택해주세요 > `)
+        loginstatus();
+}
+async function loginstatus() {
+  console.log(`1.내정보 2.정보수정 3.상품보기 4.뒤로가기 5.처음으로돌아가기 6.종료`) 
+  console.log(`메뉴를 선택해주세요 > `)
   let menu = await Input.getUserInput();
     if (menu === '1') {
       console.log('내정보')
       Info.infor('user',connection);
-      login_back();
+      loginstatus_back();
     }else if (menu === '2'){
       changeinfo();
     }else if (menu === '3'){
       console.log('상품보기')
       Info.infor('product',connection);
-      membership_back();
+      login_back();
     }else if (menu === '4'){
       membership();
     }else if (menu === '5'){
+      step1();
+    }
+    else if (menu === '6'){
       finish();
     } 
-  }
-  //step1 > 2.회원으로 다시 Back하는 ~~
-  async function login_back(){
-    console.log('뒤로가기 위해 <back>를 입력해주세요~')
-    let menu = await Input.getUserInput();
-    if (menu.toLowerCase() === 'back') {
-      membership_back();
-    }
   }
 //step1 > 2.회원 > 2.로그인 > 2.정보수정
 async function changeinfo() {
@@ -280,9 +288,11 @@ async function changeinfo() {
     }
   }
 
+  
 function finish() {
-  console.log('프로그램을 종료합니다.');
-  Input.close();
+  console.log('프로그램이 종료되었습니다.');
+  connection.end();
+  process.exit();
 }
 
 // 시작 단계 호출

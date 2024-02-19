@@ -27,7 +27,6 @@ async function main(){
       console.log(`1. 관리자용 2. 회원용 3. 종료`);
       let menu = await Input.getUserInput();   //menu 값에 입력된 값 저장
       if(menu==='1') {                         //menu 값이 1(관리자용) 이라면
-
         console.log('1.물품 2. 회원 3. 주문');     //1. 물품, 2. 회원, 3.주문 메뉴를 보여줌
         let manager = await Input.getUserInput(); // manager 값에 입력된 값 저장
 
@@ -421,7 +420,7 @@ async function main(){
           await wait(1000);
           }
       else if(customer === '2'){
-        let PK = 'cart_user_id';
+        let PK = 'user_id';
         console.log('아이디를 입력해주세요');
         let id = await Input.getUserInput();
         console.log(`입력하신 ID는 ${id}입니다.`);
@@ -432,6 +431,7 @@ async function main(){
         //   Info.infor(`${table}`);
         // }
         if(menu==='1') {
+          let PK='user_id'
           console.log('내정보')
           Info.select_infor(`${table}`,`'${id}'`,`${PK}`,connection);
         }else if(menu==='2'){
@@ -443,7 +443,7 @@ async function main(){
             console.log('이름 >');
             let change = await Input.getUserInput();
             console.log(`${change}로 변경 완료되었습니다.`)
-            Update.update( id,change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
+            Update.update( id, change,`${table}`,`${table}_${attr}`,`${PK}`,connection);
             await wait(1000);
             console.log('~~~~~~~~~~');
             console.log('');
@@ -484,8 +484,9 @@ async function main(){
           };
         }else if(menu==='3'){
           let table = 'cart';
+          let a='cart_user_id'
           console.log('상품보기');
-          Info.select_infor(`${table}`,`'${id}'`,`${PK}`,connection);
+          Info.select_infor(`${table}`,`'${id}'`,`${a}`,connection);
         }else if(menu==='4'){ 
           console.log('종료되었습니다~');
           connection.end();

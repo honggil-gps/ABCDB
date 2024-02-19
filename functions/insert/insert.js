@@ -21,7 +21,7 @@ connection.connect((err)=> {
 function orders_write(table, num, userid, product_num, count, price, connection){
   connection.connect((err)=> {
   //삽입 부분
-    let sql = `INSERT INTO orders(${table}_num,${table}_user_id,${table}_product_num,${table}_count, ${table}_price) VALUES(?,?,?,?,?)`;
+    let sql = `INSERT INTO orders(${table}_num,${table}_user_id,${table}_product_num,${table}_count, ${table}_price) `;
   
     let ord_value=[num,userid,product_num,count,price];
     connection.query(sql, ord_value, (err, result, fields)=>{
