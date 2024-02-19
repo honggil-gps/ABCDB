@@ -28,7 +28,7 @@ async function userid_exam(table, attr ,id, connection){
   });
   const ex_value= result[0]['ex'];
     if( ex_value === 'same'){
-      console.log('아이디 중복입니다 다시 입력해주세요');
+      console.log('중복입니다 다시 입력해주세요');
       return 1;
     }
     else{
